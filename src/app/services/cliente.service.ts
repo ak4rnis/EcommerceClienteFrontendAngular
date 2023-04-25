@@ -33,7 +33,7 @@ export class ClienteService {
     return localStorage.getItem('token');
 
   }
-  public isAuthenticated(allowRoles: string[]):boolean{
+  public isAuthenticated():boolean{
     const token:any = localStorage.getItem('token');
     if(!token){
       return false;
@@ -55,6 +55,6 @@ export class ClienteService {
       localStorage.clear();
       return false;
     }
-    return allowRoles.includes(decodedToken['role']);
+    return true;
   }
 }
