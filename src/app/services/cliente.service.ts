@@ -28,6 +28,11 @@ export class ClienteService {
     return this._http.put(this.url+'actualizar_perfil_cliente_guest/'+id,data,{headers:headers});
   }
 
+  obtener_config_publico():Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    return this._http.get(this.url+'obtener_config_publico',{headers:headers});
+  }
+
   getToken()
   {
     return localStorage.getItem('token');
