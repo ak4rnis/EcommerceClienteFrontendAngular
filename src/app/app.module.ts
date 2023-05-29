@@ -12,6 +12,10 @@ import { LoginComponent } from './components/login/login.component';
 import { PerfilComponent } from './components/usuario/perfil/perfil.component';
 import { SidebarComponent } from './components/usuario/sidebar/sidebar.component';
 import { IndexProductoComponent } from './components/productos/index-producto/index-producto.component';
+import { NgbPaginationModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ShowProductoComponent } from './components/productos/show-producto/show-producto.component';
+import { CarritoComponent } from './components/carrito/carrito.component';
+import { DireccionesComponent } from './components/usuario/direcciones/direcciones.component';
 
 
 @NgModule({
@@ -23,13 +27,19 @@ import { IndexProductoComponent } from './components/productos/index-producto/in
     LoginComponent,
     PerfilComponent,
     SidebarComponent,
-    IndexProductoComponent
+    IndexProductoComponent,
+    ShowProductoComponent,
+    CarritoComponent,
+    DireccionesComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    NgbPaginationModule,
+    NgbModule
+   
   ],
   providers: [],
   bootstrap: [AppComponent]

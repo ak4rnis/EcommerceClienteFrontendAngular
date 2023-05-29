@@ -27,11 +27,13 @@ export class SidebarComponent implements OnInit {
             
           }else{
             this.user_lc = undefined;
+            
           }
         },
         error => {
           console.log(error);
           this.user = undefined;
+          
         }
       )
     }
