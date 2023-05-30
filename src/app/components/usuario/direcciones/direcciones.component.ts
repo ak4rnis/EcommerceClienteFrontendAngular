@@ -24,6 +24,7 @@ export class DireccionesComponent implements OnInit {
   public provincias_arr:Array<any> = [];
   public distritos_arr:Array<any> = [];
   public direcciones:Array<any> = [];
+  public load_data:Boolean = false;
   
   public token:any;
   constructor(private _guestService:GuestService, private _clienteService:ClienteService){
@@ -51,6 +52,7 @@ export class DireccionesComponent implements OnInit {
     this._clienteService.obtener_direccion_todos_cliente(localStorage.getItem('_id'),this.token).subscribe(
       response => {
         this.direcciones = response.data;
+        this.load_data = false;
       }
     )
   }
@@ -125,7 +127,7 @@ export class DireccionesComponent implements OnInit {
         }
       });
       this.provincias_arr.forEach((element:any) => {
-        if(parseInt(element.id) == parseInt(this.direccion.provincias)){
+        if(parseInt(element.id) == parseInt(this.direccion.provincia)){
           this.direccion.provincia = element.name;
         }
       });
@@ -167,6 +169,7 @@ export class DireccionesComponent implements OnInit {
             position: 'topRight',
             message: 'Se agrego la nueva direccion correctamente.'
           });
+          this.obtener_direccion();
         }
       );
     }else{
@@ -179,5 +182,21 @@ export class DireccionesComponent implements OnInit {
         message: 'Los datos del formulario no son validos'
       });
     }
+  }
+
+  establecer_principal(id:any){
+    this._clienteService.cambiar_direccion_principal_cliente(id, localStorage.getItem('_id'),this.token).subscribe(
+      response => {
+        iziToast.show({
+          tite: 'SUCCESS',
+          titleColor: '1#DC74C',
+          color: '#FFF',
+          class: 'text-success',
+          position: 'topRight',
+          message: 'Se actualizo la direccion principal.'
+        });
+        this.obtener_direccion();
+      }
+    )
   }
 }

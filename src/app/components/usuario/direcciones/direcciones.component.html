@@ -24,10 +24,10 @@
           <!-- Content -->
           <div class="col-lg-8 ml-auto">
             <div class="d-flex align-items-center justify-content-between mb-4 pb-1 pb-sm-3">
-              <h1 class="h2 mb-0">Mis Direcciones</h1>
+              <h1 class="h2 mb-0">Nuevas dirección</h1>
               
             </div>
-            <form #registroForm="ngForm" (ngSubmit)="registrar(registroForm)">
+            <form class="mb-3" #registroForm="ngForm" (ngSubmit)="registrar(registroForm)">
                 <div class="row mb-3">
                     <div class="col-sm-6 form-group">
                         <label for="ac-fn">Destinario</label>
@@ -108,23 +108,50 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-lg">&nbsp;Crear direccion&nbsp;</button>
             </form>
-            <div class="row">
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-md-3 col-sm-4 mb-sm-0 mb-3">
-                            <h3 class="mb-2 font-size-lg">Annette Black</h3>
-                            <span class="d-block mb-3 font-size-sm text-muted">3 days ago</span>
-                            <div class="mt-n1 star-rating">
-                                <i class="sr-star cxi-star.filled active"></i>
-                                <i class="sr-star cxi-star.filled active"></i>
-                                <i class="sr-star cxi-star.filled active"></i>
-                                <i class="sr-star cxi-star.filled active"></i>
-                                <i class="sr-star cxi-star.filled active"></i>
+            <div class="d-flex align-items-center justify-content-between mb-4 pb-1 pb-sm-3">
+                <h1 class="h2 mb-0">Mis direcciones</h1>
+            </div>
+            <div class="row" *ngIf="!load_data">
+                <div class="col-12" *ngIf="direcciones.length >= 1">
+                    <ng-container *ngFor="let item of direcciones">
+                        <div class="card mb-5">
+                            <div class="card-body">
+                                <div class="row " >
+                                    <div class="col-md-3 col-sm-4 mb-sm-0 mb-3">
+                                        <h3 class="mb-2 font-size-lg">{{item.destinario}}</h3>
+                                        <span class="d-block mb-3 font-size-sm text-muted">{{item.zip}}</span>
+                                        <a class="badge badge-primary" *ngIf="item.principal">Direccion de envio</a>
+                                        <a class="badge badge-success" style="cursor: pointer;" *ngIf="!item.principal" (click)="establecer_principal(item._id)">Establecer principal</a>
+                                        
+                                    </div>
+                                    <div class="col">
+                                        <p class="mb-3">
+                                            {{item.direccion}}
+                                        </p>
+                                        <p class="mb-3">
+                                            {{item.pais}}
+                                            <span *ngIf="item.region">{{item.region}}</span> -
+                                            <span *ngIf="item.provincia">{{item.provincia}}</span> -
+                                            <span *ngIf="item.distrito">{{item.distrito}}</span> -
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col">
-                            <p class="mb-3">Vel velit montes</p>
-                        </div>
+                        
+                    </ng-container>
+                    
+                </div>
+                <div class="col-12" *ngIf="direcciones.length == 0">
+                    <h3 class="h6 mb-2 text-uppercase">No se encontraron direcciones</h3>
+                    <h6 class="h1" style="font-size: 2rem !important;">Debe registrar su direccion de envio por favor</h6>
+                    
+                </div>
+            </div>
+            <div class="row" *ngIf="load_data">
+                <div class="col-12 text-center">
+                    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                        <span class="sr-only">Loading...</span>
                     </div>
                 </div>
             </div>
