@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { GLOBAL } from 'src/app/services/GLOBAL';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { io } from 'socket.io-client';
@@ -29,18 +29,15 @@ export class CarritoComponent implements OnInit {
   public direccion_principal: any = {};
   public envios: Array<any> = [];
   public precio_envio:any = "0";
+  public venta: any = {};
+  public dventa: Array<any> = [];
   constructor( private _clienteService:ClienteService, private _guestService:GuestService){
     this.idcliente = localStorage.getItem('_id');
+    this.venta.cliente = this.idcliente;
     this.token = localStorage.getItem('token');
     this.url = GLOBAL.url;
     
-    this._clienteService.obtener_carrito_cliente(this.idcliente, this.token).subscribe(
-      response => {
-        this.carrito_arr = response.data;
-        this.calcular_carrito();
-        this.total_pagar;
-      }
-    );
+    
     this._guestService.get_Envios().subscribe(
       response => {
         this.envios = response;
@@ -50,6 +47,7 @@ export class CarritoComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    this.init_Data();
     setTimeout(() => {
       new Cleave('#cc-number', {
         creditCard: true,
@@ -83,7 +81,14 @@ export class CarritoComponent implements OnInit {
       },
       onApprove : async (data:any,actions:any)=>{
         const order = await actions.order.capture();
-  
+        this.venta.transaccion = order.purchase_units[0].payments.captures[0].id;
+        this.venta.detalles = this.dventa;
+        this._clienteService.registro_compra_cliente(this.venta,this.token).subscribe(
+          response => {
+            
+          }
+        )
+
         
       },
       onError : (err:any) =>{
@@ -92,7 +97,25 @@ export class CarritoComponent implements OnInit {
       onCancel: function (data:any, actions:any) {
         
       }
-    }).render(this.paypalElement.nativeElement);
+    }).render(this.paypalElement?.nativeElement);
+  }
+
+  init_Data(){
+    this._clienteService.obtener_carrito_cliente(this.idcliente, this.token).subscribe(
+      response => {
+        this.carrito_arr = response.data;
+        this.carrito_arr.forEach(element => {
+          this.dventa.push({
+            producto: element.producto._id,
+            subtotal: element.producto.precio,
+            variedad: element.cantidad,
+            cliente: localStorage.getItem('_id')
+          })
+        })
+        this.calcular_carrito();
+        this.calcular_total('Envio Gratis');
+      }
+    );
   }
   get_direccion_principal(){
     this._clienteService.obtener_direccion_principal_cliente(localStorage.getItem('_id'),this.token).subscribe(
@@ -102,6 +125,7 @@ export class CarritoComponent implements OnInit {
           console.log(this.direccion_principal);
         }else{
           this.direccion_principal = response.data;
+          this.venta.direccion = this.direccion_principal._id;
           console.log(this.direccion_principal);
         }
         
@@ -110,6 +134,7 @@ export class CarritoComponent implements OnInit {
     )
   }
   calcular_carrito(){
+    this.subtotal = 0;
     this.carrito_arr.forEach(element => {
       this.subtotal = this.subtotal + parseInt(element.producto.precio);
     });
@@ -128,17 +153,15 @@ export class CarritoComponent implements OnInit {
           message: 'Se elimino el producto del carrito correctmante'
         });
         this.socket.emit('delete-carrito',{data:response.data});
-        this._clienteService.obtener_carrito_cliente(this.idcliente,this.token).subscribe(
-          response => {
-            this.carrito_arr = response.data;
-            this.calcular_carrito();
-            this.subtotal;
-          }
-        )
+        this.init_Data();
       }
     )
   }
-  calcular_total(){
+  calcular_total(envio_titulo:any){
     this.total_pagar = parseInt(this.subtotal.toString()) + parseInt(this.precio_envio);
+    this.venta.subtotal = this.total_pagar;
+    this.venta.envio_precio = parseInt(this.precio_envio);
+    this.venta.envio_titulo = envio_titulo;
+
   }
 }

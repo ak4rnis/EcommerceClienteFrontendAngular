@@ -92,9 +92,10 @@ export class NavComponent implements OnInit {
   }
 
   calcular_carrito(){
+    this.subtotal = 0;
     this.carrito_arr.forEach(element => {
       this.subtotal = this.subtotal + parseInt(element.producto.precio);
-    })
+    });
   }
   eliminar_item(id:any){
     this._clienteService.eliminar_carrito_cliente(id,this.token).subscribe(
