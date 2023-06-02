@@ -85,7 +85,7 @@ export class CarritoComponent implements OnInit {
         this.venta.detalles = this.dventa;
         this._clienteService.registro_compra_cliente(this.venta,this.token).subscribe(
           response => {
-            
+            console.log(response);
           }
         )
 
@@ -108,7 +108,8 @@ export class CarritoComponent implements OnInit {
           this.dventa.push({
             producto: element.producto._id,
             subtotal: element.producto.precio,
-            variedad: element.cantidad,
+            variedad: element.variedad,
+            cantidad: element.cantidad,
             cliente: localStorage.getItem('_id')
           })
         })
