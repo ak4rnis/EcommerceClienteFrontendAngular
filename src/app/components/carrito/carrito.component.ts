@@ -3,6 +3,7 @@ import { GLOBAL } from 'src/app/services/GLOBAL';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { io } from 'socket.io-client';
 import { GuestService } from 'src/app/services/guest.service';
+import { Router } from '@angular/router';
 declare var iziToast:any;
 declare var Cleave:any;
 declare var StickySidebar:any;
@@ -31,11 +32,16 @@ export class CarritoComponent implements OnInit {
   public precio_envio:any = "0";
   public venta: any = {};
   public dventa: Array<any> = [];
-  constructor( private _clienteService:ClienteService, private _guestService:GuestService){
+  public card_data : any = {};
+  public btn_load:Boolean = false;
+  public carrito_load:Boolean = true;
+  public user:any = {};
+  constructor( private _clienteService:ClienteService, private _guestService:GuestService, private _router:Router){
     this.idcliente = localStorage.getItem('_id');
     this.venta.cliente = this.idcliente;
     this.token = localStorage.getItem('token');
     this.url = GLOBAL.url;
+    
     
     
     this._guestService.get_Envios().subscribe(
@@ -43,7 +49,10 @@ export class CarritoComponent implements OnInit {
         this.envios = response;
         console.log(this.envios);
       }
-    )
+    );
+    const user_data:any = localStorage.getItem('user_data');
+
+    this.user = JSON.parse(user_data);
 
   }
   ngOnInit(): void {
@@ -70,10 +79,10 @@ export class CarritoComponent implements OnInit {
   
           return actions.order.create({
             purchase_units : [{
-              description : 'Nombre del pago',
+              description : 'Pago en mi tienda',
               amount : {
                 currency_code : 'USD',
-                value: 999
+                value: this.subtotal
               },
             }]
           });
@@ -85,7 +94,7 @@ export class CarritoComponent implements OnInit {
         this.venta.detalles = this.dventa;
         this._clienteService.registro_compra_cliente(this.venta,this.token).subscribe(
           response => {
-            console.log(response);
+            this._router.navigate(['/']);
           }
         )
 
@@ -112,7 +121,8 @@ export class CarritoComponent implements OnInit {
             cantidad: element.cantidad,
             cliente: localStorage.getItem('_id')
           })
-        })
+        });
+        this.carrito_load = false;
         this.calcular_carrito();
         this.calcular_total('Envio Gratis');
       }
@@ -164,5 +174,13 @@ export class CarritoComponent implements OnInit {
     this.venta.envio_precio = parseInt(this.precio_envio);
     this.venta.envio_titulo = envio_titulo;
 
+  }
+
+  validar_cupon(){
+    if(this.venta.cupon.toString().length >= 30){
+      
+    }else{
+
+    }
   }
 }
