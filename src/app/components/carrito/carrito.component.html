@@ -204,6 +204,9 @@
                       <button type="button" class="btn btn-primary" (click)="validar_cupon()">&nbsp;&nbsp;Aplicar&nbsp;&nbsp;</button>
                     </div>
                   </div>
+                  <div class="alert alert-danger mt-3" role="alert" *ngIf="error_cupon">
+                    {{error_cupon}}
+                  </div>
                 </div>
                 <div class="bg-secondary rounded mb-4">
                   <div class="border-bottom p-4">
@@ -220,7 +223,7 @@
                     </li>
                     <li class="d-flex justify-content-between mb-2">
                       <span>Descuento:</span>
-                      <span>&mdash;</span>
+                      <span>- ${{descuento_fijo}}</span>
                     </li>
                     
                   </ul>

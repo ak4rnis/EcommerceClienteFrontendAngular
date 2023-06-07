@@ -36,6 +36,8 @@ export class CarritoComponent implements OnInit {
   public btn_load:Boolean = false;
   public carrito_load:Boolean = true;
   public user:any = {};
+  public error_cupon:any = '';
+  public descuento_fijo:any = 0;
   constructor( private _clienteService:ClienteService, private _guestService:GuestService, private _router:Router){
     this.idcliente = localStorage.getItem('_id');
     this.venta.cliente = this.idcliente;
@@ -94,9 +96,13 @@ export class CarritoComponent implements OnInit {
         this.venta.detalles = this.dventa;
         this._clienteService.registro_compra_cliente(this.venta,this.token).subscribe(
           response => {
-            this._router.navigate(['/']);
+            this._clienteService.enviar_correo_compra_cliente(response.venta._id,this.token).subscribe(
+              response => {
+                this._router.navigate(['/']);
+              }
+            );
           }
-        )
+        );
 
         
       },
@@ -177,10 +183,31 @@ export class CarritoComponent implements OnInit {
   }
 
   validar_cupon(){
-    if(this.venta.cupon.toString().length >= 30){
-      
-    }else{
-
+    if(this.venta.cupon){
+      if(this.venta.cupon.toString().length <= 25){
+        this.error_cupon = '';
+        this._clienteService.validar_cupon_admin(this.venta.cupon,this.token).subscribe(
+          response => {
+            if(response.data != undefined)
+            {
+              this.error_cupon = '';
+              if(response.data.tipo == 'Valor fijo'){
+                this.descuento_fijo = response.data.valor;
+                this.total_pagar = this.total_pagar - this.descuento_fijo;
+              }else if(response.data.tipo == 'Porcentaje')
+              {
+                this.descuento_fijo = (this.total_pagar * response.data.valor)/100;
+                this.total_pagar = this.total_pagar - this.descuento_fijo;
+              }
+            }else{
+              this.error_cupon = 'El cupon no se pudo canjear';
+            }
+          }
+        )
+      }else{
+        this.error_cupon = 'El cupon debe ser menos de 30 caracteres';
+      }
     }
+    
   }
 }
