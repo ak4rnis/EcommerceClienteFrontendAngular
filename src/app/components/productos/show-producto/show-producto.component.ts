@@ -14,6 +14,7 @@ declare var iziToast:any;
 })
 export class ShowProductoComponent implements OnInit {
   public slug:any;
+  public descuento_activo:any = undefined;
   public producto:any = {};
   public url:any;
   public productos_rec:Array<any> = [];
@@ -96,6 +97,15 @@ export class ShowProductoComponent implements OnInit {
         }
       });
     },5000)
+    this._guestService.obtener_descuento_activo().subscribe(
+      response => {
+        if(response.data != undefined){
+          this.descuento_activo = response.data[0];
+        }else{
+          this.descuento_activo = undefined;
+        }
+      }
+    )
     
    
     

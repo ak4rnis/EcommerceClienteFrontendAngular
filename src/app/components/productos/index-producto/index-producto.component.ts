@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { GLOBAL } from 'src/app/services/GLOBAL';
 import {io} from "socket.io-client";
+import { GuestService } from 'src/app/services/guest.service';
 declare var noUiSlider:any;
 declare var $:any;
 declare var tns:any;
@@ -18,6 +19,7 @@ export class IndexProductoComponent implements OnInit {
     variedad: '',
     cantidad: 1
   };
+  public descuento_activo: any = undefined;
   public socket = io('http://localhost:4201');
   public filter_categoria:any = '';
   
@@ -34,7 +36,7 @@ export class IndexProductoComponent implements OnInit {
   public page:number = 1;
   public pageSize:number = 5;
   public sort_by:any = 'Defecto';
-  constructor(private _clienteService:ClienteService, private _route: ActivatedRoute){
+  constructor(private _clienteService:ClienteService, private _route: ActivatedRoute, private _guestService:GuestService){
     this.url = GLOBAL.url;
     this.token = localStorage.getItem('token')
     this._clienteService.obtener_config_publico().subscribe(
@@ -93,6 +95,15 @@ export class IndexProductoComponent implements OnInit {
         $('.cs-range-slider-value-max').val(values[1]);
     });
     $('.noUi-tooltip').css('font-size','11px');
+    this._guestService.obtener_descuento_activo().subscribe(
+      response => {
+        if(response.data != undefined){
+          this.descuento_activo = response.data[0];
+        }else{
+          this.descuento_activo = undefined;
+        }
+      }
+    )
   }
 
   buscar_categorias(){
