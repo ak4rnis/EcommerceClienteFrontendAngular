@@ -18,7 +18,17 @@
       <section class="container pt-3 pb-5 pb-md-6 mb-2 mb-lg-0">
         <div class="row mb-5" *ngIf="descuento_activo != undefined">
           <div class="col-12">
-            <img [src]="url+'obtener_banner_descuento/'+descuento_activo.banner" style="width: 100% !important;" >
+            <div class="py-5 px-md-5 px-4 bg-size-cover bg-position-center-y" style="background-image: url({{url}}obtener_banner_descuento/{{descuento_activo.banner}});">
+              <div class="mt-md-3 mb-5 p-md-2" style="max-width: 14rem;">
+                <h3 class="mb-2 pb-1 font-size-sm text-uppercase">{{descuento_activo.fecha_inicio}} <br> hasta <br> {{descuento_activo.fecha_fin}}</h3>
+                <h2 class="pb-3">{{descuento_activo.titulo}}</h2>
+                <a class="btn btn-outline-primary mb-5" href="#">Todos los productos</a>
+              </div>
+              <div class="mb-md-3 pt-5 p-md-2">
+                <h3 class="mb-2 pb-1 font-size-sm text-uppercase">Descuento de {{descuento_activo.descuento}}%</h3>
+              </div>
+            </div>
+            <!--<img [src]="url+'obtener_banner_descuento/'+descuento_activo.banner" style="width: 100% !important;" >-->
           </div>
         </div>
 

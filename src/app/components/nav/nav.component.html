@@ -3,10 +3,10 @@
   
     <!-- Navbar -->
     <!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page -->
-    <div class="navbar navbar-expand-lg navbar-light bg-light navbar-sticky" data-fixed-element>
+    <div class="navbar navbar-expand-lg  navbar-sticky" style="background-color: #f0c775;" data-fixed-element>
       <div class="container px-0 px-xl-3">
-        <a href="index.html" class="navbar-brand order-lg-1 mr-0 pr-lg-3 mr-lg-4">
-          <img src="assets/img/ecommerce/logo.svg" alt="Createx Logo" width="130">
+        <a [routerLink]="['/']" class="navbar-brand order-lg-1 mr-0 pr-lg-3 mr-lg-4">
+          <img style="max-width: 50px;" class="rounded-circle" src="https://static.vecteezy.com/system/resources/previews/005/217/617/original/abstract-colorful-ornament-doodle-capybara-illustration-cartoon-concept-suitable-for-logo-wallpaper-banner-background-card-book-illustration-t-shirt-design-sticker-cover-etc-vector.jpg" alt="Createx Logo" width="130">
         </a>
         <!-- Search desktop -->
         <div class="input-group-overlay ml-4 d-lg-block d-none order-lg-3" style="max-width: 21rem;">
@@ -210,7 +210,8 @@
                 <input type="number" class="form-control form-control-sm bg-light mr-3" readonly style="width: 4.5rem;" value="{{item.cantidad}}">
                 <div class="text-nowrap">
                   <!--<strong class="text-danger"></strong>-->
-                  <span style="font-size: 1.2rem !important;" class="font-size-xs text-muted">${{item.producto.precio}}</span>
+                  <span style="font-size: 1.2rem !important;" class="font-size-xs text-muted" *ngIf="descuento_activo == undefined">${{item.producto.precio}}</span>
+                  <span style="font-size: 1.2rem !important;" class="font-size-xs text-muted" *ngIf="descuento_activo != undefined">${{item.producto.precio | descuento: descuento_activo.descuento}}</span>
                 </div>
               </div>
               <button class="btn btn-link btn-sm text-decoration-none px-0 pb-0">
