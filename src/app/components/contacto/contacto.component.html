@@ -63,33 +63,37 @@
                     </a>
                 </div>
                 <p class="text-dark lead font-weight-bold pb-2">O ponganse en conatcto con nuestros completando el siguiente formulario:</p>
-                <form class="needs-validation" novalidate="">
+                <form #registroForm="ngForm" (ngSubmit)="registro(registroForm)" class="needs-validation" novalidate="">
                     <div class="row">
                     <div class="col-sm-6 form-group">
-                        <label for="cont-name">Name *</label>
-                        <input type="text" id="cont-name" class="form-control form-control-lg" placeholder="John Doe" required="">
-                        <div class="invalid-feedback">Please let us know your name.</div>
+                        <label for="cont-name">Nombres y apellidos *</label>
+                        <input type="text" id="cont-name" class="form-control form-control-lg" placeholder="John Doe" name="cliente" [(ngModel)]="contacto.cliente" required="">
+                        
                     </div>
                     <div class="col-sm-6 form-group">
-                        <label for="cont-email">Email *</label>
-                        <input type="email" id="cont-email" class="form-control form-control-lg" placeholder="johndoe@example.com" required="">
-                        <div class="invalid-feedback">Please provide valid email address.</div>
+                        <label for="cont-email">Correo *</label>
+                        <input type="email" id="cont-email" class="form-control form-control-lg" placeholder="johndoe@example.com" name="correo" [(ngModel)]="contacto.correo" required="">
+                        
                     </div>
                     <div class="col-sm-6 form-group">
-                        <label for="cont-phone">Phone</label>
-                        <input type="text" id="cont-phone" class="form-control form-control-lg bg-0" data-format="custom" data-delimiter="-" data-blocks="2 3 4" placeholder="00-000-0000">
+                        <label for="cont-phone">Telefono</label>
+                        <input type="text" id="cont-phone" class="form-control form-control-lg bg-0"  name="telefono" [(ngModel)]="contacto.telefono" data-format="custom" data-delimiter="-" data-blocks="2 3 4" placeholder="00-000-0000">
                     </div>
                     <div class="col-sm-6 form-group">
-                        <label for="cont-subject">Subject</label>
-                        <input type="text" id="cont-subject" class="form-control form-control-lg bg-0" placeholder="Title of your message">
+                        <label for="cont-subject">Asunto</label>
+                        <input type="text" id="cont-subject" name="asunto" [(ngModel)]="contacto.asunto" class="form-control form-control-lg bg-0" placeholder="Title of your message">
                     </div>
                     <div class="col-12 form-group">
-                        <label for="cont-message">Message *</label>
-                        <textarea id="cont-message" class="form-control form-control-lg" rows="5" placeholder="Write your message here" required=""></textarea>
-                        <div class="invalid-feedback">Please write your message.</div>
+                        <label for="cont-message">Mensaje *</label>
+                        <textarea id="cont-message" name="mensaje" [(ngModel)]="contacto.mensaje" class="form-control form-control-lg" rows="5" placeholder="Write your message here" required=""></textarea>
+                       
                     </div>
                     <div class="col-lg-4 col-sm-5 pt-2">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block">Send message</button>
+                        <button *ngIf="!load_btn" type="submit" class="btn btn-primary btn-lg btn-block">Enviar</button>
+                        <button *ngIf="load_btn" type="button" class="btn btn-primary">
+                            <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+                            Enviando...
+                        </button>
                     </div>
                     </div>
                 </form>
