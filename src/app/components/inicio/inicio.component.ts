@@ -14,11 +14,44 @@ export class InicioComponent implements OnInit {
   public url:any;
   public mas_vendidos: Array<any> = [];
   public config_global: any = {};
+  public categorias: Array<any> = [];
   constructor(private _guestService:GuestService, private _clienteService:ClienteService){
     this.url = GLOBAL.url;
     this._clienteService.obtener_config_publico().subscribe(
       response => {
-        this.config_global = response.data;
+        response.data.categorias.forEach((element:any) => {
+          if(element.titulo == 'Smartphones'){
+            this.categorias.push({
+              titulo: element.titulo,
+              portada: 'assets/img/ecommerce/home/categories/04.jpg'
+            });
+          }else if(element.titulo == 'Headphones'){
+            this.categorias.push({
+              titulo: element.titulo,
+              portada: 'assets/img/ecommerce/home/categories/05.jpg'
+            });
+          }else if(element.titulo == 'Oficina'){
+            this.categorias.push({
+              titulo: element.titulo,
+              portada: 'assets/img/ecommerce/home/categories/07.jpg'
+            })
+          }else if(element.titulo == 'Moda'){
+            this.categorias.push({
+              titulo: element.titulo,
+              portada: 'assets/img/ecommerce/home/categories/09.jpg'
+            });
+          }else if(element.titulo == 'Alimentos'){
+            this.categorias.push({
+              titulo: element.titulo,
+              portada: 'assets/img/ecommerce/home/categories/08.jpg'
+            })
+          }else if(element.titulo == 'Hogar'){
+            this.categorias.push({
+              titulo: element.titulo,
+              portada: 'assets/img/ecommerce/home/categories/03.jpg'
+            })
+          }
+        })
       }
     )
   }

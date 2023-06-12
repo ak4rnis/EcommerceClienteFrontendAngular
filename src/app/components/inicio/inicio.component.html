@@ -210,7 +210,7 @@
                       <span class="h5 d-inline-block mb-0">${{item.precio}}</span>
                     </div>
                     <div class="d-flex align-items-center" *ngIf="descuento_activo != undefined">
-                      <span class="h5 d-inline-block text-danger mb-0">${{item.descuento | descuento: descuento_activo.descuento}}</span>
+                      <span class="h5 d-inline-block text-danger mb-0">${{item.precio | descuento: descuento_activo.descuento}}</span>
                       <del class="d-inline-block ml-2 pl-1 text-muted">${{item.precio}}</del>
                     </div>
                   </div>
@@ -227,69 +227,19 @@
 
     <!-- Popular categories -->
     <section class="container mt-1 mb-3 my-sm-4 py-5 py-lg-6">
-        <h2 class="h1 mb-5 pb-3 text-center">Popular categories</h2>
+        <h2 class="h1 mb-5 pb-3 text-center">Categorias</h2>
         <div class="cs-carousel cs-nav-outside">
           <div class="cs-carousel-inner cs-carousel-inner-five" data-carousel-options='{
             
           }'>
 
             <!-- Category -->
-            <div class="pb-2">
-              <a href="shop-catalog.html" class="d-block cs-image-scale cs-heading-highlight text-center">
+            <div class="pb-2" *ngFor="let item of categorias">
+              <a [routerLink]="['/productos/categoria/',item.titulo.toLowerCase()]" class="d-block cs-image-scale cs-heading-highlight text-center">
                 <div class="cs-image-inner rounded-circle mx-auto mb-4" style="max-width: 180px;">
-                  <img src="../../assets/img/ecommerce/home/categories/04.jpg" alt="Category image">
+                  <img [src]="item.portada" alt="Category image">
                 </div>
-                <h3 class="h5 mb-3">Tops</h3>
-              </a>
-            </div>
-
-            <!-- Category -->
-            <div class="pb-2">
-              <a href="shop-catalog.html" class="d-block cs-image-scale cs-heading-highlight text-center">
-                <div class="cs-image-inner rounded-circle mx-auto mb-4" style="max-width: 180px;">
-                  <img src="../../assets/img/ecommerce/home/categories/05.jpg" alt="Category image">
-                </div>
-                <h3 class="h5 mb-3">T-shirts</h3>
-              </a>
-            </div>
-
-            <!-- Category -->
-            <div class="pb-2">
-              <a href="shop-catalog.html" class="d-block cs-image-scale cs-heading-highlight text-center">
-                <div class="cs-image-inner rounded-circle mx-auto mb-4" style="max-width: 180px;">
-                  <img src="../../assets/img/ecommerce/home/categories/06.jpg" alt="Category image">
-                </div>
-                <h3 class="h5 mb-3">Caps</h3>
-              </a>
-            </div>
-
-            <!-- Category -->
-            <div class="pb-2">
-              <a href="shop-catalog.html" class="d-block cs-image-scale cs-heading-highlight text-center">
-                <div class="cs-image-inner rounded-circle mx-auto mb-4" style="max-width: 180px;">
-                  <img src="../../assets/img/ecommerce/home/categories/07.jpg" alt="Category image">
-                </div>
-                <h3 class="h5 mb-3">Sandals</h3>
-              </a>
-            </div>
-
-            <!-- Category -->
-            <div class="pb-2">
-              <a href="shop-catalog.html" class="d-block cs-image-scale cs-heading-highlight text-center">
-                <div class="cs-image-inner rounded-circle mx-auto mb-4" style="max-width: 180px;">
-                  <img src="../../assets/img/ecommerce/home/categories/08.jpg" alt="Category image">
-                </div>
-                <h3 class="h5 mb-3">Jackets</h3>
-              </a>
-            </div>
-
-            <!-- Category -->
-            <div class="pb-2">
-              <a href="shop-catalog.html" class="d-block cs-image-scale cs-heading-highlight text-center">
-                <div class="cs-image-inner rounded-circle mx-auto mb-4" style="max-width: 180px;">
-                  <img src="../../assets/img/ecommerce/home/categories/09.jpg" alt="Category image">
-                </div>
-                <h3 class="h5 mb-3">Coats</h3>
+                <h3 class="h5 mb-3">{{item.titulo}}</h3>
               </a>
             </div>
           </div>
@@ -304,14 +254,14 @@
               <img src="../../assets/img/ecommerce/home/mobile-app-illustration.png" class="d-block mx-auto my-4 mb-lg-0 mt-lg-n4" width="498" alt="Illustartion">
             </div>
             <div class="col-md-7 col-lg-6 pt-3 pb-5 pt-md-5 pb-md-4 ml-auto">
-              <h2 class="text-light text-center text-md-left pb-3">Enjoy mobile shopping with our Createx Store App!</h2>
+              <h2 class="text-light text-center text-md-left pb-3">Disfrute de las compras moviles con nuestra aplciacion Createx Store!</h2>
               <div class="d-flex flex-wrap flex-sm-nowrap justify-content-center justify-content-md-start">
                 <a href="#" class="btn-market btn-apple mb-3 mx-2 ml-md-0 mr-md-3" role="button">
-                  <span class="btn-market-subtitle">Download on the</span>
+                  <span class="btn-market-subtitle">Descarga en el </span>
                   <span class="btn-market-title">App Store</span>
                 </a>
                 <a href="#" class="btn-market btn-google mb-3 mx-2 mx-md-0" role="button">
-                  <span class="btn-market-subtitle">Download on the</span>
+                  <span class="btn-market-subtitle">Descarga en el</span>
                   <span class="btn-market-title">Google Play</span>
                 </a>
               </div>
@@ -325,25 +275,25 @@
         <div class="row py-3">
           <div class="col-sm-6 col-md-3 text-center mb-md-0 mb-4 pb-md-0 pb-3">
             <img class="mb-4" src="../../assets/img/ecommerce/home/services/delivery.svg" width="48" alt="Worldwide Shipping">
-            <h5 class="h5 mb-2">Fast Worldwide Shipping</h5>
+            <h5 class="h5 mb-2">Envío rapido a todo el mundo</h5>
             <p class="mb-0 text-muted">Get free shipping over $250</p>
           </div>
           <span class="divider-vertical d-sm-block d-none"></span>
           <div class="col-sm-6 col-md-3 text-center mb-md-0 mb-4 pb-md-0 pb-3">
             <img class="mb-4" src="../../assets/img/ecommerce/home/services/support.svg" width="48" alt="Customer Support">
-            <h5 class="h5 mb-2">24/7 Customer Support</h5>
+            <h5 class="h5 mb-2">Atención al cliente 24 horas al día, 7 días a la semana</h5>
             <p class="mb-0 text-muted">Friendly 24/7 customer support</p>
           </div>
           <span class="divider-vertical d-sm-block d-none"></span>
           <div class="col-sm-6 col-md-3 text-center mb-md-0 mb-4 pb-md-0 pb-3">
             <img class="mb-4" src="../../assets/img/ecommerce/home/services/guarantee.svg" width="48" alt="Customer Support">
-            <h5 class="h5 mb-2">Money Back Guarantee</h5>
+            <h5 class="h5 mb-2">Garantía de devolución del dinero</h5>
             <p class="mb-0 text-muted">We return money within 30 days</p>
           </div>
           <span class="divider-vertical d-sm-block d-none"></span>
           <div class="col-sm-6 col-md-3 text-center mb-md-0 mb-4 pb-md-0 pb-3">
             <img class="mb-4" src="../../assets/img/ecommerce/home/services/payment.svg" width="48" alt="Customer Support">
-            <h5 class="h5 mb-2">Secure Online Payment</h5>
+            <h5 class="h5 mb-2">Pago seguro de línea</h5>
             <p class="mb-0 text-muted">Accept all major credit cards</p>
           </div>
         </div>
@@ -355,7 +305,7 @@
         <div class="container pt-md-4 pb-2 pt-lg-0 pb-lg-0">
           <div class="row">
             <div class="col-md-4 text-center text-md-left pb-2 pb-md-0 mb-4 mb-md-0">
-              <p class="text-dark text-uppercase mb-2">Follow us on Instagram</p>
+              <p class="text-dark text-uppercase mb-2">Siguenos en Instagram</p>
               <h2 class="h1 pb-2 pb-md-3">@createx_store</h2>
               <a href="#" class="btn btn-outline-primary btn-lg">
                 <i class="cxi-instagram font-size-lg mr-1"></i>
