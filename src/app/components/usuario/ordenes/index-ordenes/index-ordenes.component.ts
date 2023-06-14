@@ -27,6 +27,8 @@ export class IndexOrdenesComponent implements OnInit {
       response => {
         this.ordenes = response.data;
         this.load_data = false;
+        
+        console.log(response);
 
       }
     )

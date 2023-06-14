@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { StarRatingComponent } from 'ng-starrating';
 import { GLOBAL } from 'src/app/services/GLOBAL';
 import { ClienteService } from 'src/app/services/cliente.service';
 
@@ -15,6 +16,8 @@ export class DetalleOrdenComponent implements OnInit {
   public detalles: Array<any> = [];
   public load_data:Boolean = true;
   public id:any;
+  public totalstar:number = 5;
+  public review: any = {}
   constructor(private _clienteServcie:ClienteService, private _route:ActivatedRoute){
     this.token = localStorage.getItem('token');
     this.url = GLOBAL.url;
@@ -26,6 +29,8 @@ export class DetalleOrdenComponent implements OnInit {
             if(response.data != undefined){
               this.orden = response.data;
               this.detalles = response.detalles;
+              console.log(this.orden);
+              console.log(this.detalles);
             }else{
               this.orden = undefined;
 
@@ -39,5 +44,9 @@ export class DetalleOrdenComponent implements OnInit {
   }
   ngOnInit(): void {
     
+  }
+
+  onRate($event:{oldValue:number, newValue:number, starRating:StarRatingComponent}){
+
   }
 }

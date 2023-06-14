@@ -34,7 +34,7 @@
               
 
               <ng-container *ngIf="ordenes.length >= 1">
-                <div class="card border-bottom" *ngFor="let item of ordenes | slice: (page-1)*pageSize : (page-1)*pageSize*pageSize">
+                <div class="card border-bottom" *ngFor="let item of ordenes | slice: (page-1)*pageSize : (page-1)*pageSize+pageSize">
                   <div class="card-header accordion-heading py-1">
                     <a [routerLink]="['/cuenta/ordenes/',item._id]" class="d-flex flex-wrap justify-content-between py-3" data-toggle="collapse" aria-expanded="false">
                       <span class="pr-2"># {{item._id.toUpperCase()}}</span>
