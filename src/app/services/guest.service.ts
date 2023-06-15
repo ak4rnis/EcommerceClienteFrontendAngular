@@ -50,4 +50,6 @@ export class GuestService {
     let headers = new HttpHeaders().set('Content-Type','application/json');
     return this._http.post(this.url+'enviar_mensaje_contacto',data,{headers:headers});
   }
+
+  
 }

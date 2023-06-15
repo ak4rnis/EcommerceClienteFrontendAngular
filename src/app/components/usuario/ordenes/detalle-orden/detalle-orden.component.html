@@ -116,7 +116,8 @@
                                 </h3>
                                 <ul class="list-unstyled font-size-xs mt-n2 mb-2">
                                   <li class="mb-0"><span class="text-muted">{{item.producto.titulo_variedad}}:</span>{{item.variedad}}</li>
-                                  <a (click)="onModal(item)" style="cursor: pointer;" data-toggle="modal" [attr.data-target]="'#review-'+item._id" class="text-primary">[Emitir reseña]</a>
+                                  <a *ngIf="!item.estado" (click)="onModal(item)" style="cursor: pointer;" data-toggle="modal" [attr.data-target]="'#review-'+item._id" class="text-primary">[Emitir reseña]</a>
+                                  <span *ngIf="item.estado" class="badge badge-warning">Comentario emitido</span>
                                   <div class="modal fade" id="review-{{item._id}}" tabindex="-1" style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                       <div class="modal-content">

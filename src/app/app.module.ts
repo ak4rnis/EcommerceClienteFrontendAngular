@@ -21,6 +21,7 @@ import { ContactoComponent } from './components/contacto/contacto.component';
 import { IndexOrdenesComponent } from './components/usuario/ordenes/index-ordenes/index-ordenes.component';
 import { DetalleOrdenComponent } from './components/usuario/ordenes/detalle-orden/detalle-orden.component';
 import {RatingModule} from 'ng-starrating';
+import { IndexReviewComponent } from './components/usuario/reviews/index-review/index-review.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import {RatingModule} from 'ng-starrating';
     DescuentoPipe,
     ContactoComponent,
     IndexOrdenesComponent,
-    DetalleOrdenComponent
+    DetalleOrdenComponent,
+    IndexReviewComponent
   ],
   imports: [
     BrowserModule,
