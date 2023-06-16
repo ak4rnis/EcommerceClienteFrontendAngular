@@ -42,20 +42,21 @@
                         <div class="row">
                             <div class="col-md-3 col-sm-4 mb-sm-0 mb-3">
                                 <h3 class="mb-2 font-size-lg">{{item.cliente.nombres}} {{item.cliente.apellidos}}</h3>
-                                <span class="d-block mb-3 font-size-sm text-muted">1 daya ago</span>
+                                <span class="d-block mb-3 font-size-sm text-muted">{{item.createdAt|date}}</span>
                                 <div class="mt-n1 star-rating">
-                                    <i class="sr-star cxi-star-filled active"></i>
-                                    <i class="sr-star cxi-star-filled active"></i>
-                                    <i class="sr-star cxi-star-filled active"></i>
-                                    <i class="sr-star cxi-star-filled active"></i>
-                                    <i class="sr-star cxi-star-filled active"></i>
-                                    <i class="sr-star cxi-star"></i>
+                                    <i class="sr-star cxi-star-filled" [ngClass]="{'active': item.estrellas >= 1}"></i>
+                                    <i class="sr-star cxi-star-filled" [ngClass]="{'active': item.estrellas >= 2}"></i>
+                                    <i class="sr-star cxi-star-filled" [ngClass]="{'active': item.estrellas >= 3}"></i>
+                                    <i class="sr-star cxi-star-filled" [ngClass]="{'active': item.estrellas >= 4}"></i>
+                                    <i class="sr-star cxi-star-filled" [ngClass]="{'active': item.estrellas >= 5}"></i>
+                                    
                                 </div>
                             </div>
                             <div class="col">
                                 <p class="mb-3">
                                     <a class="mr-1 font-weight-bold text-decoration-none" href="">@{{item.cliente.email}}</a>
-                                    Egestas fermentum 
+                                    <br>
+                                    {{item.review}}
                                 </p>
                                 
                                 
@@ -64,6 +65,20 @@
                         
                     </div>
                 </div>
+                <div class="col-12">
+                  <ngb-pagination style="color:black"  
+              [(page)]="page"
+              [pageSize]="pageSize"
+              [collectionSize]="reviews.length"
+              
+              
+              
+             >
+             <ng-template ngbPaginationPrevious>Prev</ng-template>
+              <ng-template ngbPaginationNext>Next</ng-template>
+             </ngb-pagination>
+                </div>
+
                 
             </div>
 

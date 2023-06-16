@@ -41,8 +41,9 @@ export class DetalleOrdenComponent implements OnInit {
           response.detalles.forEach((element:any) => {
             this._clienteServcie.obtener_review_producto_cliente(element.producto._id).subscribe(
               response => {
+                
                 let emitido = false;
-                response.data.foreEach((element_:any) => {
+                response.data.forEach((element_:any) => {
                   if(element_.cliente == localStorage.getItem('_id')){
                     emitido = true;
                   }
@@ -53,8 +54,10 @@ export class DetalleOrdenComponent implements OnInit {
           })
           this.detalles = response.detalles;
           this.load_data = false;
-          this.orden = undefined;
+          
 
+        }else{
+          this.orden = undefined;
         }
         
       }
